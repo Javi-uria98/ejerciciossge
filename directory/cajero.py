@@ -4,8 +4,8 @@ class cajero:
         self.billetes = billetes
 
     def inicializarcajero(self):
-        self.total=1000
-        self.billetes = {50: 10, 20: 20, 10: 10}
+        self.billetes = [[10, 10], [20, 20], [50, 10]]
+        self.total = sum(clave * valor for clave, valor in self.billetes)
 
 
 class cliente:
@@ -30,23 +30,39 @@ if dni == "11111111X":
     while bucle:
         if int(input("¿Que operación desea realizar? (pulse 1 para sacar dinero o pulse 0 para salir)")) == 1:
             cantidad = int(input("¿Cuanto dinero quiere sacar? (introduzca la cantidad por teclado)"))
-            if (cantidad % 10 == 0):
-                c.total = c.total - cantidad
-                cli.saldo = cli.saldo - cantidad
-                if (cantidad % 10 == 0 and cantidad < 50) and c.billetes[10] > 0:
-                    billetes10 = cantidad / 10
-                    c.billetes[10] = c.billetes[10] - billetes10
-                else:
-                    if cantidad % 20 == 0:
-                        billetes20 = cantidad / 20
-                        c.billetes[20] = c.billetes[20] - billetes20
-
-                print("El dinero restante del cajero es " + str(c.total) + ", el saldo que tiene el cliente es " + str(
-                    cli.saldo) + " , quedan "
-                                 "" + str(c.billetes[10]) + " billetes de diez euros, " + str(
-                    c.billetes[20]) + " de veinte euros, " + str(c.billetes[50]) + " de cincuenta euros")
+            if cantidad > cli.saldo:
+                print("No tiene tanto saldo en el cajero")
             else:
-                print("Recuerde, solo puede sacar dinero en múltiplos de 10")
+                if cantidad % 10 != 0:
+                    print("Recuerde, solo puede sacar dinero en múltiplos de 10")
+                else:
+                    if ((cantidad <= (c.billetes[2][0] * c.billetes[2][1])) and (cantidad % c.billetes[2][0] == 0)) and (
+                            c.billetes[2][0] * c.billetes[2][1] != 0):
+                        numBillete = cantidad / c.billetes[2][0]
+                        c.billetes[2][1] = c.billetes[2][1] - numBillete
+                        cli.saldo = cli.saldo - cantidad
+                        c.total = c.total - cantidad
+                        print("Su saldo restante es " + str(cli.saldo) + " y en el cajero quedan " + str(c.total))
+                        print("Quedan " + str(c.billetes[2][1]) + " billetes de cincuenta euros")
+                    else:
+                        if ((cantidad <= (c.billetes[1][0] * c.billetes[1][1])) and (cantidad % c.billetes[1][0] == 0)) and (
+                                c.billetes[1][0] * c.billetes[1][1] != 0):
+                            numBillete = cantidad / c.billetes[1][0]
+                            c.billetes[1][1] = c.billetes[1][1] - numBillete
+                            cli.saldo = cli.saldo - cantidad
+                            c.total = c.total - cantidad
+                            print("Su saldo restante es " + str(cli.saldo) + " y en el cajero quedan " + str(c.total))
+                            print("Quedan " + str(c.billetes[1][1]) + " billetes de veinte euros")
+                        else:
+                            if ((cantidad <= (c.billetes[0][0] * c.billetes[0][1])) and (cantidad % c.billetes[0][0] == 0)) and (
+                                    c.billetes[0][0] * c.billetes[0][1] != 0):
+                                numBillete = cantidad / c.billetes[0][0]
+                                c.billetes[0][1] = c.billetes[0][1] - numBillete
+                                cli.saldo = cli.saldo - cantidad
+                                c.total = c.total - cantidad
+                                print(
+                                    "Su saldo restante es " + str(cli.saldo) + " y en el cajero quedan " + str(c.total))
+                                print("Quedan " + str(c.billetes[0][1]) + " billetes de diez euros")
         else:
             print("Vuelva pronto")
             bucle = False
@@ -59,11 +75,40 @@ else:
         while bucle:
             if int(input("¿Que operación desea realizar? (pulse 1 para sacar dinero o pulse 0 para salir)")) == 1:
                 cantidad = int(input("¿Cuanto dinero quiere sacar? (introduzca la cantidad por teclado)"))
-                c.total = c.total - cantidad;
-                cli.saldo = cli.saldo - cantidad;
-                print(
-                    "El dinero restante del cajero es " + str(c.total) + ", y el saldo que tiene el cliente es " + str(
-                        cli.saldo))
+                if cantidad > cli.saldo:
+                    print("No tiene tanto saldo en el cajero")
+                else:
+                    if cantidad % 10 != 0:
+                        print("Recuerde, solo puede sacar dinero en múltiplos de 10")
+                    else:
+                        if ((cantidad <= (c.billetes[2][0] * c.billetes[2][1])) and (cantidad % c.billetes[2][0] == 0)) and (
+                                c.billetes[2][0] * c.billetes[2][1] != 0):
+                            numBillete = cantidad / c.billetes[2][0]
+                            c.billetes[2][1] = c.billetes[2][1] - numBillete
+                            cli.saldo = cli.saldo - cantidad
+                            c.total = c.total - cantidad
+                            print("Su saldo restante es " + str(cli.saldo) + " y en el cajero quedan " + str(c.total))
+                            print("Quedan " + str(c.billetes[2][1]) + " billetes de cincuenta euros")
+                        else:
+                            if ((cantidad <= (c.billetes[1][0] * c.billetes[1][1])) and (cantidad % c.billetes[1][0] == 0)) and (
+                                    c.billetes[1][0] * c.billetes[1][1] != 0):
+                                numBillete = cantidad / c.billetes[1][0]
+                                c.billetes[1][1] = c.billetes[1][1] - numBillete
+                                cli.saldo = cli.saldo - cantidad
+                                c.total = c.total - cantidad
+                                print(
+                                    "Su saldo restante es " + str(cli.saldo) + " y en el cajero quedan " + str(c.total))
+                                print("Quedan " + str(c.billetes[1][1]) + " billetes de veinte euros")
+                            else:
+                                if ((cantidad <= (c.billetes[0][0] * c.billetes[0][1])) and (cantidad % c.billetes[0][0] == 0)) and (
+                                        c.billetes[0][0] * c.billetes[0][1] != 0):
+                                    numBillete = cantidad / c.billetes[0][0]
+                                    c.billetes[0][1] = c.billetes[0][1] - numBillete
+                                    cli.saldo = cli.saldo - cantidad
+                                    c.total = c.total - cantidad
+                                    print("Su saldo restante es " + str(cli.saldo) + " y en el cajero quedan " + str(
+                                        c.total))
+                                    print("Quedan " + str(c.billetes[0][1]) + " billetes de diez euros")
             else:
                 print("Vuelva pronto")
                 bucle = False
