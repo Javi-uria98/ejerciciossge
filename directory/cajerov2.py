@@ -38,7 +38,7 @@ if dni == "11111111X":
                     print("Recuerde, solo puede sacar dinero en múltiplos de 10")
                 else:
                     for i in c.billetes:
-                        if (cantidad % i[0] == 0) and ((i[0] * 10 - cantidad) >= 0):
+                        if (cantidad % i[0] == 0) and ((i[0] - cantidad / 10) >= 0):
                             i[1] = i[1] - (cantidad / i[0])
                             print("Quedan " + str(i[1]) + " billetes de " + str(i[0]) + " euros")
                             cli.saldo = cli.saldo - cantidad
